@@ -26,7 +26,6 @@ namespace TodoApi.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            _logger.LogDebug("This is for logz.io team to help finding the error for maik.");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
