@@ -1,8 +1,3 @@
-
-using Jaeger;
-using Jaeger.Reporters;
-using Jaeger.Samplers;
-using Jaeger.Senders.Thrift;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,18 +25,9 @@ namespace TodoApi
 
             services.AddSingleton<ITracer>(serviceProvider =>
             {
-                string serviceName = serviceProvider.GetRequiredService<IWebHostEnvironment>().ApplicationName;
-                string hostName = "localhost";
-                var tracer =
-                        new Tracer.Builder(serviceName)
-                            .WithSampler(new ConstSampler(true))
-                            .WithReporter(new RemoteReporter.Builder().WithSender(
-                                new UdpSender(hostName, 6831, 0)).Build()
-                            )
-                    .Build();
-                    GlobalTracer.Register(tracer);
-                    return tracer;
-                }
+                var tracer = GlobalTracer.Instance;
+                return tracer;
+            }
             );
 
         }
